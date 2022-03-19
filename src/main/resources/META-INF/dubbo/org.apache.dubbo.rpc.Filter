@@ -1,0 +1,2 @@
+trace_consumer=com.brave.dubbo.trace.filter.TraceConsumerFilter
+trace_provider=com.brave.dubbo.trace.filter.TraceProviderFilter
