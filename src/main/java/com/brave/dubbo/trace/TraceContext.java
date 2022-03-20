@@ -1,5 +1,7 @@
 package com.brave.dubbo.trace;
 
+import com.alibaba.ttl.TransmittableThreadLocal;
+
 /**
  * trace
  *
@@ -9,9 +11,9 @@ package com.brave.dubbo.trace;
 public class TraceContext {
 
     /**
-     * InheritableThreadLocal 解决子线程ThreadLocal参数传递问题
+     * 引入阿里TransmittableThreadLocal 解决子线程ThreadLocal参数传递问题
      */
-    private static final ThreadLocal<Tracer> tracerThreadLocal = new InheritableThreadLocal<>();
+    private static final ThreadLocal<Tracer> tracerThreadLocal = new TransmittableThreadLocal<>();
 
     public static void set(Tracer tracer){
         tracerThreadLocal.set(tracer);
