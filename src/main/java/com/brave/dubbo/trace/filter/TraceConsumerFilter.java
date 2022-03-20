@@ -1,7 +1,7 @@
 package com.brave.dubbo.trace.filter;
 
 import com.brave.dubbo.trace.TraceConstants;
-import com.brave.dubbo.trace.TraceUtils;
+import com.brave.dubbo.trace.TraceContext;
 import com.brave.dubbo.trace.Tracer;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.common.constants.CommonConstants;
@@ -29,7 +29,7 @@ public class TraceConsumerFilter implements Filter {
     @Override
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
 
-        Tracer tracer = TraceUtils.get();
+        Tracer tracer = TraceContext.get();
         if (!Objects.isNull(tracer)){
             setTrace(invocation, tracer);
         }

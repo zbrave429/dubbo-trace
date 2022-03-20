@@ -1,7 +1,7 @@
 package com.brave.dubbo.trace.filter;
 
 import com.brave.dubbo.trace.TraceConstants;
-import com.brave.dubbo.trace.TraceUtils;
+import com.brave.dubbo.trace.TraceContext;
 import com.brave.dubbo.trace.Tracer;
 import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.common.extension.Activate;
@@ -44,7 +44,7 @@ public class TraceProviderFilter implements Filter {
         if(Objects.isNull(tracer)){
             return;
         }
-        TraceUtils.set(tracer);
+        TraceContext.set(tracer);
         MDC.put(TraceConstants.TRACE_ID, tracer.getTraceId());
         MDC.put(TraceConstants.SPAN_ID, tracer.getSpanId());
 
@@ -54,8 +54,8 @@ public class TraceProviderFilter implements Filter {
     }
 
     private void removeTraceContext(){
-        Tracer tracer = TraceUtils.get();
-        TraceUtils.remove();
+        Tracer tracer = TraceContext.get();
+        TraceContext.remove();
         MDC.remove(TraceConstants.TRACE_ID);
         MDC.remove(TraceConstants.SPAN_ID);
         if (logger.isDebugEnabled()){

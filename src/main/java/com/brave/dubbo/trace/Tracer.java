@@ -48,4 +48,13 @@ public class Tracer {
     public void setLogicId(AtomicInteger logicId) {
         this.logicId = logicId;
     }
+
+    @Override
+    public String toString() {
+        return "Tracer{" +
+                "traceId='" + traceId + '\'' +
+                ", spanId='" + spanId + '\'' +
+                ", logicId=" + logicId +
+                '}';
+    }
 }
