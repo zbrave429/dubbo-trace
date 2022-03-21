@@ -1,5 +1,7 @@
 package com.brave.dubbo.trace;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.security.SecureRandom;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
@@ -24,9 +26,9 @@ public class TraceIdGenerator {
 
     private static final AtomicLong inc = new AtomicLong();
 
-    public static String getTraceId(IdGenEnum idGenEnum){
+    public static String getTraceId(IdGenEnum idGenEnum, String prefix){
         return switch (idGenEnum){
-            case CURRENT_TIME -> getTraceIdByCurrentTime();
+            case CURRENT_TIME -> getTraceIdByCurrentTime(prefix);
             default -> String.valueOf(getTraceIdByUUID());
         };
     }
@@ -35,8 +37,11 @@ public class TraceIdGenerator {
      * 时间戳+ 自增位+ 随机数
      * @return 19位字符串
      */
-    private static String getTraceIdByCurrentTime(){
-        return Long.toHexString(System.currentTimeMillis()) + getInc() + random(4);
+    private static String getTraceIdByCurrentTime(String prefix){
+        return StringUtils.defaultString(prefix)
+                + Long.toHexString(System.currentTimeMillis())
+                + getInc()
+                + random(4);
     }
 
     /**

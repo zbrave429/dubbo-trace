@@ -20,6 +20,10 @@ public class Tracer {
     public Tracer() {
     }
 
+    public Tracer(String traceId) {
+        this.traceId = traceId;
+    }
+
     public Tracer(String traceId, String spanId) {
         this.traceId = traceId;
         this.spanId = spanId;
@@ -47,6 +51,10 @@ public class Tracer {
 
     public void setLogicId(AtomicInteger logicId) {
         this.logicId = logicId;
+    }
+
+    public static Tracer build(String traceId, String spanId){
+        return new Tracer(traceId, spanId);
     }
 
     @Override

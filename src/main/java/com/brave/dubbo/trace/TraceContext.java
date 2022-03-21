@@ -1,6 +1,7 @@
 package com.brave.dubbo.trace;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
+import org.slf4j.MDC;
 
 /**
  * trace
@@ -25,6 +26,13 @@ public class TraceContext {
 
     public static void remove(){
         tracerThreadLocal.remove();
+    }
+
+    public static void init(IdGenEnum idGenEnum, String prefix){
+        Tracer tracer = Tracer.build(TraceIdGenerator.getTraceId(idGenEnum, prefix), "0");
+        set(tracer);
+        MDC.put(TraceConstants.TRACE_ID, tracer.getTraceId());
+        MDC.put(TraceConstants.SPAN_ID, tracer.getSpanId());
     }
 
 }
