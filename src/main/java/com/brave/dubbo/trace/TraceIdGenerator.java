@@ -27,10 +27,11 @@ public class TraceIdGenerator {
     private static final AtomicLong inc = new AtomicLong();
 
     public static String getTraceId(IdGenEnum idGenEnum, String prefix){
-        return switch (idGenEnum){
-            case CURRENT_TIME -> getTraceIdByCurrentTime(prefix);
-            default -> String.valueOf(getTraceIdByUUID());
-        };
+        if (idGenEnum.equals(IdGenEnum.CURRENT_TIME)){
+            return getTraceIdByCurrentTime(prefix);
+        } else {
+            return String.valueOf(getTraceIdByUUID());
+        }
     }
 
     /**
