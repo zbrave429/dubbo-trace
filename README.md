@@ -33,5 +33,7 @@ maven install
 
 TraceContext.init(IdGenEnum idGenEnum, String prefix);
 ```
+## 6.线程池使用
+为了保证trace信息在子线程内进行传递，统一使用thread包内的AsyncTaskFactory提交延时任务
 
 
