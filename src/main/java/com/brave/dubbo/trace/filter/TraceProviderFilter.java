@@ -64,7 +64,7 @@ public class TraceProviderFilter implements Filter {
     }
 
     private Tracer buildTracer(Map<String, String> attachments){
-        return new Tracer(attachments.get(TraceConstants.TRACE_ID),
+        return Tracer.build(attachments.get(TraceConstants.TRACE_ID),
                 attachments.get(TraceConstants.SPAN_ID));
     }
 }

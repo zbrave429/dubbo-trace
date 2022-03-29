@@ -44,9 +44,12 @@ public class TraceConsumerFilter implements Filter {
 
         if(StringUtils.isNotBlank(tracer.getSpanId())){
             invocation.getAttachments().put(TraceConstants.SPAN_ID,
-                    tracer.getSpanId() + TraceConstants.SPAN_SEPARATOR + tracer.getLogicId().addAndGet(1));
+                    tracer.getSpanId()
+                            + TraceConstants.SPAN_SEPARATOR
+                            + tracer.getLogicId().addAndGet(1));
         } else {
-            invocation.getAttachments().put(TraceConstants.SPAN_ID, String.valueOf(tracer.getLogicId().addAndGet(1)));
+            invocation.getAttachments().put(TraceConstants.SPAN_ID,
+                    String.valueOf(tracer.getLogicId().addAndGet(1)));
         }
         if (logger.isDebugEnabled()){
             logger.debug("setTrace success, trace={}", tracer);
