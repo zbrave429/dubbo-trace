@@ -1,21 +1,36 @@
 package com.brave.dubbo.trace;
 
+import com.brave.dubbo.trace.model.TraceExtend;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * TODO
+ * Tracer
  *
  * @author <a href='1286998496@qq.com'>zhangyong</a>
  * @date 2022-03-19 19:15
  */
-
 public class Tracer {
 
+    /**
+     * traceId
+     */
     private String traceId;
 
+    /**
+     * spanId
+     */
     private String spanId;
 
+    /**
+     * logicId
+     */
     private AtomicInteger logicId = new AtomicInteger();
+
+    /**
+     * trace 扩展数据
+     */
+    private TraceExtend traceExtend;
 
     public Tracer() {
     }
@@ -57,12 +72,21 @@ public class Tracer {
         return new Tracer(traceId, spanId);
     }
 
+    public TraceExtend getTraceExtend() {
+        return traceExtend;
+    }
+
+    public void setTraceExtend(TraceExtend traceExtend) {
+        this.traceExtend = traceExtend;
+    }
+
     @Override
     public String toString() {
         return "Tracer{" +
                 "traceId='" + traceId + '\'' +
                 ", spanId='" + spanId + '\'' +
                 ", logicId=" + logicId +
+                ", traceExtend=" + traceExtend +
                 '}';
     }
 }

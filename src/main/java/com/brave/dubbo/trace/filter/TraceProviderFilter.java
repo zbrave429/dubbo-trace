@@ -1,8 +1,11 @@
 package com.brave.dubbo.trace.filter;
 
+import com.alibaba.fastjson.JSON;
 import com.brave.dubbo.trace.TraceConstants;
 import com.brave.dubbo.trace.TraceContext;
 import com.brave.dubbo.trace.Tracer;
+import com.brave.dubbo.trace.model.TraceExtend;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.common.extension.Activate;
 import org.apache.dubbo.rpc.*;
@@ -64,7 +67,12 @@ public class TraceProviderFilter implements Filter {
     }
 
     private Tracer buildTracer(Map<String, String> attachments){
-        return Tracer.build(attachments.get(TraceConstants.TRACE_ID),
+        Tracer tracer = Tracer.build(attachments.get(TraceConstants.TRACE_ID),
                 attachments.get(TraceConstants.SPAN_ID));
+
+        if (StringUtils.isNotBlank(attachments.get(TraceConstants.TRACE_EXTEND))){
+            tracer.setTraceExtend(JSON.parseObject(attachments.get(TraceConstants.TRACE_EXTEND), TraceExtend.class));
+        }
+        return tracer;
     }
 }

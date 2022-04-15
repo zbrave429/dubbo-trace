@@ -1,7 +1,10 @@
 package com.brave.dubbo.trace;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
+import com.brave.dubbo.trace.model.UserInfo;
 import org.slf4j.MDC;
+
+import java.util.Objects;
 
 /**
  * trace
@@ -26,6 +29,28 @@ public class TraceContext {
 
     public static void remove(){
         tracerThreadLocal.remove();
+    }
+
+    /**
+     * 是否测试
+     * @return bool
+     */
+    public static boolean isTest(){
+        return !Objects.isNull(tracerThreadLocal.get())
+                && !Objects.isNull(tracerThreadLocal.get().getTraceExtend())
+                && tracerThreadLocal.get().getTraceExtend().isTest();
+    }
+
+    /**
+     * 用户登录信息
+     * @return UserInfo
+     */
+    public static UserInfo getUserInfo(){
+        if(!Objects.isNull(tracerThreadLocal.get())
+                && !Objects.isNull(tracerThreadLocal.get().getTraceExtend())){
+            return tracerThreadLocal.get().getTraceExtend().getUserInfo();
+        }
+        return null;
     }
 
     public static void init(IdGenEnum idGenEnum, String prefix){

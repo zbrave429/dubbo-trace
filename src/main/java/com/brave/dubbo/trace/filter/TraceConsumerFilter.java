@@ -1,5 +1,6 @@
 package com.brave.dubbo.trace.filter;
 
+import com.alibaba.fastjson.JSON;
 import com.brave.dubbo.trace.TraceConstants;
 import com.brave.dubbo.trace.TraceContext;
 import com.brave.dubbo.trace.Tracer;
@@ -38,10 +39,12 @@ public class TraceConsumerFilter implements Filter {
 
     private void setTrace(Invocation invocation, Tracer tracer){
 
+        // TRACE_ID
         if(StringUtils.isNotBlank(tracer.getTraceId())){
             invocation.getAttachments().put(TraceConstants.TRACE_ID, tracer.getTraceId());
         }
 
+        // SPAN_ID
         if(StringUtils.isNotBlank(tracer.getSpanId())){
             invocation.getAttachments().put(TraceConstants.SPAN_ID,
                     tracer.getSpanId()
@@ -51,6 +54,13 @@ public class TraceConsumerFilter implements Filter {
             invocation.getAttachments().put(TraceConstants.SPAN_ID,
                     String.valueOf(tracer.getLogicId().addAndGet(1)));
         }
+
+        // 扩展数据
+        if(!Objects.isNull(tracer.getTraceExtend())){
+            invocation.getAttachments().put(TraceConstants.TRACE_EXTEND,
+                    JSON.toJSONString(tracer.getTraceExtend()));
+        }
+
         if (logger.isDebugEnabled()){
             logger.debug("setTrace success, trace={}", tracer);
         }

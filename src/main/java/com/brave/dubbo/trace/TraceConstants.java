@@ -23,6 +23,11 @@ public class TraceConstants {
      */
     public static final String LOGIC_ID = "logicId";
 
+    /**
+     * trace 扩展数据
+     */
+    public static final String TRACE_EXTEND = "traceExtend";
+
     public static final String SPAN_SEPARATOR = ".";
 
 
